@@ -61,4 +61,24 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#22000000"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:hint="请输入vivo密码："/>
+
+    <EditText
+        android:id="@+id/edittext"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:hint="请输入密码"/>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_marginLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="保存"/>
 </LinearLayout>

@@ -11,9 +11,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements OnCheckedChangeListener {
@@ -22,10 +25,15 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
     CompoundButton mWindowSwitch, mNotificationSwitch;
     private BroadcastReceiver mReceiver;
 
+    private EditText mEditText;
+    private Button mButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mEditText = findViewById(R.id.edittext);
+        mButton = findViewById(R.id.btn_save);
         mWindowSwitch = (CompoundButton) findViewById(R.id.sw_window);
         mWindowSwitch.setOnCheckedChangeListener(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
@@ -47,6 +55,21 @@ public class MainActivity extends Activity implements OnCheckedChangeListener {
         }
         mReceiver = new UpdateSwitchReceiver();
         registerReceiver(mReceiver, new IntentFilter(ACTION_STATE_CHANGED));
+
+        String pwd = SPHelper.getVivoPwd(this);
+        if (!TextUtils.isEmpty(pwd)) {
+            mEditText.setText(pwd);
+        }
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(mEditText.getText())) {
+                    SPHelper.setVivoPwd(MainActivity.this, mEditText.getText().toString());
+                    Toast.makeText(MainActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                    mButton.requestFocus();
+                }
+            }
+        });
     }
 
     @Override

@@ -10,6 +10,15 @@ public class SPHelper {
         return sp.getBoolean("is_show_window", true);
     }
 
+    public static String getVivoPwd(Context context){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString("vivo_pwd", "");
+    }
+
+    public static void setVivoPwd(Context context, String pwd) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString("vivo_pwd", pwd).commit();
+    }
     public static void setIsShowWindow(Context context, boolean isShow) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putBoolean("is_show_window", isShow).commit();

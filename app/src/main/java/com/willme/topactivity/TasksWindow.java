@@ -18,11 +18,18 @@ public class TasksWindow {
         sWindowManager = (WindowManager) context.getApplicationContext()
                 .getSystemService(Context.WINDOW_SERVICE);
 
+        int type;
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
+            type = WindowManager.LayoutParams.TYPE_TOAST;
+        } else if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
+            type = WindowManager.LayoutParams.TYPE_PHONE;
+        }else{
+            type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        }
         sWindowParams = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
-                Build.VERSION.SDK_INT <= Build.VERSION_CODES.N ?
-                        WindowManager.LayoutParams.TYPE_TOAST : WindowManager.LayoutParams.TYPE_PHONE, 0x18,
+                type, 0x18,
                 PixelFormat.TRANSLUCENT);
         sWindowParams.gravity = Gravity.LEFT + Gravity.TOP;
         sView = LayoutInflater.from(context).inflate(R.layout.window_tasks,
